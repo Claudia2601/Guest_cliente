@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-navbar>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-title>Historial Detalle</ion-title>
+        </ion-col>
+        <ion-col>
+        </ion-col>
+        <ion-col>
+          <img class="icon_img" src="../assets/imgs/icons/corona.png">
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <!--Prueba-->
+  <ion-card class="card_atras">
+    <ion-card-content class="card_atras">
+      <ion-card-title>
+        <h4 class="blanco_1">Detalle Reservacion </h4>
+      </ion-card-title>
+
+
+
+      <ion-item class="card_atras" *ngFor="let producto of productos">
+        <img class="icon" src="../assets/imgs/icons/champagne.png" item-start>
+        <p class="blanco_2">{{ producto.producto }} </p>
+        <ion-badge class="negro" item-end>$ {{ producto.costo }} </ion-badge>
+      </ion-item>
+
+
+      <ion-item class="card_atras">
+        <ion-badge item-end></ion-badge>
+        <img class="icon" src="../assets/imgs/icons/billete.png" item-start>
+        <a class="blanco_2">TOTAL</a>
+        <ion-badge item-end>$ {{sumatoria}}</ion-badge>
+
+      </ion-item>
+
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>

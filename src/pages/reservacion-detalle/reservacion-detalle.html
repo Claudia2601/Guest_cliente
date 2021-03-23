@@ -1,0 +1,115 @@
+<ion-header class="esquina" >
+    <ion-navbar hideBackButton class="borde">
+       <ion-row >
+         <ion-col>
+           <button ion-fab color="negro" (click)="(goBack())"><ion-icon name="arrow-back" color="naranja" style="zoom:1.2;"></ion-icon></button>
+         </ion-col>
+           <ion-col>
+             <ion-title class="texto-alineado"><h6>RESERVACIÓN</h6></ion-title>
+           </ion-col>
+           <ion-col>
+             <button class="esquina">
+              <img src="./assets/imgs/icons/corona.png" class="ima">
+             </button>
+           </ion-col>
+       </ion-row>
+    </ion-navbar>
+</ion-header>
+<ion-content class="esquina cards-bg" padding>
+  <!--<ion-card class="card_atras" *ngFor="let contact of contactlist">
+      <ion-card-content class="card_atras">
+        <p text-center class="blanco_2">{{contact.displayName}}</p>
+        <p text-center class="blanco_2">{{contact.phoneNumbers[0].value}}</p>
+      </ion-card-content>
+  </ion-card>-->
+<div *ngFor="let reservaciones of infoReservaciones">
+  <ion-card class="card_atras">
+      <p text-center class="blanco_2">INFORMACIÓN</p>
+    <div *ngFor="let areas of nombresAreas">
+      <div *ngFor="let zonas of nombresZonas">
+       <div *ngIf="reservaciones.idArea==areas.uid">
+         <div *ngIf="reservaciones.idZona==zonas.uid">
+           <p text-center class="blanco_2">Hora de la reservación: {{reservaciones.hora}}</p>
+           <p text-center class="blanco_2">Número de personas: {{reservaciones.numPersonas}}</p>
+           <p text-center class="blanco_2">Área: {{areas.nombre}}</p>
+           <p text-center class="blanco_2">Zona: {{zonas.nombre}}</p>
+        </div>
+       </div>
+     </div>
+    </div>
+  </ion-card>
+  <ion-card class="card_atras" *ngFor="let productos of listaProductos">
+      <ion-card-content class="card_atras">
+          <ion-item class="card_atras">
+              <img class="icon" src="../assets/imgs/icons/calendario.png" item-start>
+              <p class="blanco_2">Producto</p>
+              <ion-badge class="negro" item-end>{{productos.producto}}</ion-badge>
+          </ion-item>
+          <ion-item class="card_atras">
+              <img class="icon" src="../assets/imgs/icons/champagne.png" item-start>
+              <a class="blanco_2">Cantidad</a>
+              <ion-badge class="negro" item-end>{{productos.cantidad}}</ion-badge>
+          </ion-item>
+          <ion-item class="card_atras">
+              <img class="icon" src="../assets/imgs/icons/billete.png" item-start>
+              <a class="blanco_2">Costo</a>
+              <ion-badge class="negro" item-end>{{productos.costo | currency}}</ion-badge>
+          </ion-item>
+          <ion-item class="card_atras">
+              <img class="icon" src="../assets/imgs/icons/billete.png" item-start>
+              <a class="blanco_2">Total</a>
+              <ion-badge class="negro" item-end>{{productos.total | currency}}</ion-badge>
+          </ion-item>
+      </ion-card-content>
+  </ion-card>
+    <ion-badge class="negro" item-end></ion-badge>
+    <ion-row class="colorRow">
+      <ion-item class="colorRow">
+          <img class="icon" src="../assets/imgs/icons/billete.png" item-start>
+          <a class="blanco_2">TOTAL DE LA RESERVACIÓN</a>
+          <ion-badge class="negro" item-end>{{total | currency}}</ion-badge>
+      </ion-item>
+    </ion-row>
+    <!--Mostrar datos de la cuenta compartida info de las usuarion con quien se compartio -->
+    <div *ngIf="reservaciones.estatus=='Compartida'">
+         <ion-card class="card_atras" >
+          <p text-center class="blanco_3">COMPARTIDA ENTRE</p>
+          <div *ngFor="let compartidas of cuentasCompartidas">
+           <div *ngIf="reservaciones.idReservacion==compartidas.idReservacion">
+             <div *ngFor="let users of infoUsers">
+                <div *ngIf="compartidas.telefono==users.phoneNumber">
+                    <ion-item class="card_atras">
+                      <img class="icon" src="../assets/imgs/icons/profile.png" item-start>
+                        <p class="blanco_2">{{users.displayName}}</p>
+                        <ion-badge class="negro">{{compartidas.totalDividido | currency}}</ion-badge>
+                        <ion-badge class="negro" item-end >{{compartidas.estatus}}</ion-badge>
+                        <div *ngIf="resultadoEspera=='true'">
+                         <div *ngIf="compartidas.estatus=='Aceptado'">
+                           <div *ngIf="idUser==users.uid">
+                            <button ion-button color="naranja" (click)="genararQR(reservaciones.idReservacion,compartidas.totalDividido,compartidas.idUsuario,compartidas.telefono)">
+                               Pagar mi parte
+                            </button>
+                           </div>
+                         </div>
+                        </div>
+                    </ion-item>
+                  </div>
+              </div>
+             </div>
+           </div>
+         </ion-card>
+    </div>
+    <!--Mostrar datos de la cuenta no compartida con el boton para pagar-->
+    <div *ngIf="reservaciones.estatus=='Aceptado'">
+       <ion-card class="card_atras" >
+           <ion-item class="card_atras">
+             <div class="centradoB2">
+               <button class="tamanoBoton" ion-button color="naranja" (click)="genararQRNormal(reservaciones.idReservacion,total,reservaciones.idUsuario)">
+                  <p class="blanco_2"> Pagar cuenta</p>
+               </button>
+             </div>
+            </ion-item>
+        </ion-card>
+    </div>
+ </div>
+</ion-content>
